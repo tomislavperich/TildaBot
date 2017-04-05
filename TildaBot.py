@@ -10,7 +10,8 @@ current_date = dt.now().strftime('%Y-%m-%d')
 
 token_file = open("user_token.txt")
 user_token = token_file.read()
-tilda_channel = discord.Object(id="299220779047059456")
+tilda_channel = discord.Object(id="299225312410075136")
+# Test channel = 299220779047059456
 
 
 #   Events
