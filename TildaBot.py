@@ -50,7 +50,8 @@ async def roll(*args):
         for i in range(int(*args)):
             rand_numbers.append(random.randint(1,6))
     else:
-        for i in range(6):.append(random.randint(1,6))
+        for i in range(6):
+            rand_numbers.append(random.randint(1,6))
     numbers = "".join(str(rand_numbers))
     return await bot.say("You rolled: {}".format(numbers[1:-1]))
 
