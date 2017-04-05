@@ -13,3 +13,4 @@ python pip -m install discord.py
 1. Push code to the repo
 2. Reboot the bot from the chat
 3. Contact me if all goes to hell
+4. Run
