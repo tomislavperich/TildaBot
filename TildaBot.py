@@ -10,8 +10,22 @@ current_date = dt.now().strftime('%Y-%m-%d')
 
 token_file = open("user_token.txt")
 user_token = token_file.read()
-tilda_channel = discord.Object(id="299225312410075136")
-# Test channel = 299220779047059456
+tilda_dev = discord.Object(id="299224095365529600")
+tilda_null = discord.Object(id="299225312410075136")
+# Tilda-dev 299224095365529600
+# Tilda-null 299225312410075136
+# Test channel 299220779047059456
+
+
+@bot.event
+async def on_message(message):
+    if message.channel == discord.utils.get(message.server.channels, name="tilda-null"):
+        if message.content.startswith("!reboot"):
+            await discord.Client(delete_message(message))
+            #await bot.send_message(tilda_null, "Rebooting...")
+            print("Rebooting ...")
+            os.system("start reboot.py")
+            import sys; sys.exit()
 
 
 #   Events
@@ -19,21 +33,21 @@ tilda_channel = discord.Object(id="299225312410075136")
 async def on_ready():
     os.system("cls")
     print("[x] {} Online".format(bot_name))
-    await bot.send_message(tilda_channel,"Up and running")
+    await bot.send_message(tilda_null,"Up and running")
     #return await bot.say("Up and running!")
 
 
 # Commands
 
     # Reboot
-@bot.command(description="This command is used to reboot the bot")
-async def reboot(*args):
-    '''Reboots the bot'''
-    await bot.send_message(tilda_channel,"Rebooting...")
-    os.system("cls")
-    print("[x] Rebooting...")
-    os.system("start reboot.py")
-    import sys; sys.exit()
+# @bot.command(description="This command is used to reboot the bot")
+# async def reboot(*args):
+#     '''Reboots the bot'''
+#     await bot.send_message(tilda_null,"Rebooting...")
+#     os.system("cls")
+#     print("[x] Rebooting...")
+#     os.system("start reboot.py")
+#     import sys; sys.exit()
 
 @bot.group(pass_context=True)
 async def cool(ctx):
