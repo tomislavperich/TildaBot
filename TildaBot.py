@@ -17,7 +17,15 @@ tilda_null = discord.Object(id="299225312410075136")
 # Test channel 299220779047059456
 
 
-@bot.event
+# Events
+
+@bot.event  # Boot
+async def on_ready():
+    print("Online".format(bot_name))
+    await bot.send_message(tilda_null,"Up and running")
+    #return await bot.say("Up and running!")
+
+@bot.event  # Reboot command used as event
 async def on_message(message):
     if message.channel == discord.utils.get(message.server.channels, name="tilda-null"):
         if message.content.startswith("!reboot"):
@@ -28,45 +36,7 @@ async def on_message(message):
             import sys; sys.exit()
 
 
-#   Events
-@bot.event
-async def on_ready():
-    os.system("cls")
-    print("[x] {} Online".format(bot_name))
-    await bot.send_message(tilda_null,"Up and running")
-    #return await bot.say("Up and running!")
-
-
 # Commands
-
-    # Reboot
-# @bot.command(description="This command is used to reboot the bot")
-# async def reboot(*args):
-#     '''Reboots the bot'''
-#     await bot.send_message(tilda_null,"Rebooting...")
-#     os.system("cls")
-#     print("[x] Rebooting...")
-#     os.system("start reboot.py")
-#     import sys; sys.exit()
-
-@bot.group(pass_context=True)
-async def cool(ctx):
-    """Says if a user is cool.
-    In reality this just checks if a subcommand is being invoked.
-    """
-    if ctx.invoked_subcommand is None:
-        await bot.say('No, {0.subcommand_passed} is not cool'.format(ctx))
-
-@cool.command(name='bot')
-async def _bot():
-    """Is the bot cool?"""
-    await bot.say('Yes, the bot is cool.')
-
-    # Ping
-@bot.command()
-async def ping(*args):
-    """Pong!"""
-    return await bot.say("Pong!")
 
     # Hello world
 @bot.command()
@@ -77,12 +47,11 @@ async def hello(*args):
     else:
         return await bot.say("Hello, {}!".format(*args))
 
-    # Time and date
+    # Ping
 @bot.command()
-async def time():
-    """Current time and date (UTM+2 only atm)"""
-    return await bot.say("The time is: {}\nThe date is: {}"\
-    .format(current_time,current_date))
+async def ping(*args):
+    """Pong!"""
+    return await bot.say("Pong!")
 
     # Echo
 @bot.command()
@@ -92,6 +61,13 @@ async def echo(*args):
     for i in args:
         say_this += i + " "
     return await bot.say(say_this)
+
+    # Time and date
+@bot.command()
+async def time():
+    """Current time and date (UTM+2 only atm)"""
+    return await bot.say("The time is: {}\nThe date is: {}"\
+    .format(current_time,current_date))
 
     # Roll the dice
 @bot.command(description="Use !roll for a single dice and !roll x for more")
@@ -109,20 +85,28 @@ async def roll(*args):
     numbers = "".join(str(rand_numbers))
     return await bot.say("You rolled: {}".format(numbers[1:-1]))
 
+    # Cool
+@bot.group(pass_context=True)
+async def cool(ctx):
+    """Says if a user is cool.
+    In reality this just checks if a subcommand is being invoked.
+    """
+    if ctx.invoked_subcommand is None:
+        await bot.say('No, {0.subcommand_passed} is not cool'.format(ctx))
+
+@cool.command(name='bot')
+async def _bot():
+    """Is the bot cool?"""
+    await bot.say('Yes, the bot is cool.')
+
     # You're right
 @bot.command()
 async def amiright():
     """Check if you're right"""
     return await bot.say("You're totally right.")
 
-    # r6 eric: I would rather poop in my hands and clap than have AMD
-    # INTEL FTW
-@bot.command()
-async def poopandclap():
-    """Self explanatory"""
-    return await bot.say(":poop: :clap:")
 
 os.system("cls")
-print("[ ] {} Starting".format(bot_name))
+print("Starting")
 bot.run(user_token)
 #https://discordapp.com/oauth2/authorize?client_id=YOUR_ID_HERE&scope=bot&permissions=0
