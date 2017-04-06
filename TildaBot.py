@@ -29,8 +29,8 @@ async def on_ready():
 async def on_message(message):
     if message.channel == discord.utils.get(message.server.channels, name="tilda-null"):
         if message.content.startswith("!reboot"):
-            await discord.Client(delete_message(message))
-            #await bot.send_message(tilda_null, "Rebooting...")
+            #await discord.Client(delete_message(message))
+            await bot.send_message(tilda_null, "Rebooting...")
             print("Rebooting...")
             os.system("start reboot.py")
             import sys; sys.exit()
