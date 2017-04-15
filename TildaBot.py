@@ -25,34 +25,37 @@ async def on_ready():
     await bot.send_message(tilda_null,"Up and running")
     #return await bot.say("Up and running!")
 
-@bot.event  # Reboot command used as event
-async def on_message(message):
-    if message.channel == discord.utils.get(message.server.channels, name="tilda-null"):
-        if message.content.startswith("!reboot"):
-            #await discord.Client(delete_message(message))
-            await bot.send_message(tilda_null, "Rebooting...")
-            print("Rebooting...")
-            os.system("start reboot.py")
-            import sys; sys.exit()
+# @bot.event  # Reboot command used as event
+# async def on_message(message, *args):
+#     if str(args) == "()":
+#         if message.channel == discord.utils.get(message.server.channels, name="tilda-null"):
+#             if message.content.startswith("$reboot"):
+#                 #await discord.Client(delete_message(message))
+#                 await bot.send_message(tilda_null, "Rebooting...")
+#                 print("Rebooting...")
+#                 os.system("start reboot.py")
+#                 import sys; sys.exit()
+#         if message.content.startswith("!hello"):
+#             await bot.send_message(tilda_null, "Hello, world!")
+#     else:
+#         if message.content.startswith("!hello"):
+#             await bot.send_message(tilda_null, "Hello, {}!".format(*args))
 
 
 # Commands
 
-    # Hello world
 @bot.command()
-async def hello(*args):
-    """world!"""
-    if str(args) == "()":
-        return await bot.say("Hello, world!")
-    else:
-        return await bot.say("Hello, {}!".format(*args))
+async def reboot(*args):
+    """Reboot the bot"""
+    await bot.say("Rebooting...")
+    os.system("start reboot.py")
+    import sys; sys.exit()
 
     # Ping
 @bot.command()
 async def ping(*args):
     """Pong!"""
     return await bot.say("Pong!")
-    print("pong")
 
     # Echo
 @bot.command()
@@ -62,7 +65,6 @@ async def echo(*args):
     for i in args:
         say_this += i + " "
     return await bot.say(say_this)
-    print("echo")
 
     # Time and date
 @bot.command()
@@ -70,9 +72,8 @@ async def time():
     """Current time and date (UTM+2 only atm)"""
     return await bot.say("The time is: {}\nThe date is: {}"\
     .format(current_time,current_date))
-    print("time")
 
-    # Roll the dice
+    # Roll the dice - Add sides options
 @bot.command(description="Use !roll for a single dice and !roll x for more")
 async def roll(*args):
     """Roll the dice"""
@@ -87,7 +88,6 @@ async def roll(*args):
             rand_numbers.append(random.randint(1,6))
     numbers = "".join(str(rand_numbers))
     return await bot.say("You rolled: {}".format(numbers[1:-1]))
-    print("roll")
 
     # Cool
 @bot.group(pass_context=True)
@@ -97,7 +97,6 @@ async def cool(ctx):
     """
     if ctx.invoked_subcommand is None:
         await bot.say('No, {0.subcommand_passed} is not cool'.format(ctx))
-    print("cool")
 
 @cool.command(name='bot')
 async def _bot():
